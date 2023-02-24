@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Keyword Analyser Output</title>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <!-- CSS only -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.body{
+    margin: 0px;
+  padding: 0px;
+}
+  .header {
+  overflow: hidden;
+  /* background-color: #f1f1f1; */
+  background: linear-gradient(90deg, rgba(89,31,201,1) 38%, rgba(90,72,208,1) 70%);
+  padding: 10px 10px;
+}
+
+.header a {
+  float: left;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* .header a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+  .descritionsclass {
+   display: flex;
+   margin-bottom: 15px;
+  }
+  .descritionsclass label {
+    padding-right: 10px;
+  }
+  .documentlabel {
+    padding-right: 10px;
+}
+  .upload_box {
+    border-radius: 20px !important;
+    box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px ;
+  }
+  .hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #fff;
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+</style>
+<style>
+  .descritionsclass {
+   display: flex;
+   margin-bottom: 15px;
+  }
+  .descritionsclass label {
+    padding-right: 10px;
+  }
+  .documentlabel {
+    padding-right: 10px;
+}
+  .upload_box {
+    border-radius: 20px !important;
+    box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px ;
+  }
+  .seotool{
+    width: 20%;
+    /* background: blue; */
+    color: #fff;
+    position: absolute;
+  }
+</style>
+
+  </head>
+  <body>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-dark header">
+      <a href="#" style="margin-left: 600px;" class="btn btn-primary bace_title">SEO Keyword Analysis</a>
+    </nav> -->
+    {% include 'header.html' %}
+    <!-- <div class="header">
+      <a href="#default" class="logo"><i class="fa fa-file-word-o" aria-hidden="true"></i> SEO Keyword Analysis</a>
+      <div class="header-right">
+        <a class="hover-underline-animation" href="#"><i class="fa fa-home" style="font-size: 22px;" aria-hidden="true"></i></a>
+        <a class="hover-underline-animation" href="https://mano96-plagiarism.hf.space/" target="blank">plagiarism checker</a>
+        <a class="hover-underline-animation" href="#">paraphrasing</a>
+        <a class="hover-underline-animation" href="#">url to content</a>
+        <a class="hover-underline-animation" href="#">grammerly</a>
+        <a class="hover-underline-animation" href="{% url 'logout' %}"><i class="fa fa-sign-out" style="font-size: 22px;" aria-hidden="true"></i></a>
+      </div>
+    </div> -->
+    <div class="d-flex justify-content-center mt-5 upload_file_box">
+      <div class="card upload_box p-3" style="width: auto;">
+       {% include 'base.html' %}
+       
+       {% block content %}
+
+   <p></p>
+   <!-- <a class="btn btn-primary seotool" type="submit" href="https://grammerly.zunamelt.com/home/" target="blank">SEO Tool</a> -->
+   <div class="container">
+    <a class="btn btn-primary seotool" type="submit" href="{% url 'retrieve' %}" >Keywords data</a>
+    <h2 class="text-center"><u>SEO KEYWORDS DATA</u></h2><br>
+    <table class="table table-dark table-striped">
+        <thead id="myTable">
+          <tr>
+            <th>Search Terms</th>
+            <!-- <th>Rank</th> -->
+            <th>Title</th>
+            <th>Description</th>
+            <th>Link</th>
+            <th>copy</th>
+            <!-- <th>State</th>
+            <th>Profit</th> -->
+          </tr>
+        </thead>
+      <tbody>
+      <!-- jinja2 Technique -->
+    
+      {% for i in data %}
+        <tr>
+          <td>{{i.searchTerms}}</td>
+          <!-- <td>{{i.rank}}</td> -->
+          <td>{{i.title}}</td>
+          <td>{{i.snippet}}</td>
+          <td id="signature_container{{i.index}}" class="">{{i.link}}</td>
+
+          <td>
+            <button style="border: 1px solid #ccc;color: #fff;" class="btn" onclick="selectElementContents('{{i.index}}');">Copy!</button>
+            <!-- <input type="button" onclick="selectElementContents( document.getElementById('signature_container') );" value="Copy to Clipboard"> -->
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    
+    <!-- <script>
+      function selectElementContents(el) {
+       console.log(el);
+        var body = document.body,
+          range, sel;
+        if (document.createRange && window.getSelection) {
+          range = document.createRange();
+          sel = window.getSelection();
+          sel.removeAllRanges();
+          range.selectNodeContents(el);
+          sel.addRange(range);
+        }
+        document.execCommand("Copy");
+      }
+    </script> -->
+
+
+      <!-- <p id="myText1">Hello World1</p>
+      <p id="myText2">Hello World2</p>
+      <p id="myText3">Hello World3</p>
+      <button class="btn" onclick="copyContent(3)">Copy!</button> -->
+      
+      <script>
+        
+        const selectElementContents = async (id) => {
+          let text = document.getElementById('signature_container'+id).innerHTML;
+          
+          // alert(text); 
+          try {
+            await navigator.clipboard.writeText(text);
+            console.log('Content copied to clipboard');
+            // var linkElement = document.getElementById("signature_container"+id);
+
+            // for(var i = 0; i<=(linkElement.length); i++){
+            //     if(id == i){
+            //       document.getElementById("signature_container"+id).className = " my_class";  
+            //       alert(id)
+            //     }else{
+            //       linkElement.classList.remove("my-class");
+            //     }
+            // }
+          } catch (err) {
+            console.error('Failed to copy: ', err);
+          }
+        }
+
+
+        
+      </script>
+
+  </div>
+   <p></p>
+
+
+{% endblock %}
+    
+    </div>
+    </div> 
+    
+    
+    
+  </body>
+</html>
+    <script>
+
+    </script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script> -->
+
+
+
+ 

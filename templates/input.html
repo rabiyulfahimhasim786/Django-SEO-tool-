@@ -1,0 +1,104 @@
+<style>
+  .note-editable p {
+    font-size: 20px;
+}
+  .copy_icon {
+  position: absolute;
+  bottom: 55px;
+right: 24px;
+}
+.copy_icon i {
+background: #ccc;
+padding: 12px;
+border-radius: 20px;
+color: #000;
+cursor: pointer;
+}
+.panel-heading{
+  display: none;
+}
+.card-img-top {
+  display: none;
+}
+[data-aos^=fade][data-aos^=fade].aos-animate {
+  transform: none !important;
+}
+.alert-danger {
+  background: none !important;
+  color: #591fc9 !important;
+  border: none !important;
+  font-size: 20px;
+}
+.aos-init {
+  border-radius: 8px !important;
+    /* width: 100%; */
+    /* box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px; */
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+}
+</style>
+{% extends 'basic.html' %} {% block content %}
+
+<br />
+<br />
+
+<div
+class="card shadow"
+data-aos-easing="ease-out-cubic"
+data-aos-duration="1500"
+data-aos="fade-right"
+>
+<img style="max-height: 20vh" class="card-img-top" src="" alt="" />
+<div class="card-body">
+<div class="">
+  <h4 class="card-title alert alert-danger text-center">
+    Type a paragraph or statement with wrong grammer and check what is does
+  </h4>
+  <p class="card-text text-center">Enter word / sentence:</p>
+</div>
+
+<div class="card">
+  <div class="card-body" >
+    <form action="mispell" method="POST" style="min-height: 40vh">
+      {% csrf_token %}
+      <grammarly-editor-plugin>
+        <textarea
+          id="summernote"
+          class="form-control"
+          spellcheck="true"
+          name="word"
+        >
+        
+      </textarea>
+      <!-- <div class="copy_icon" id="copy1">
+        <i class="fa fa-clone" aria-hidden="true"></i>
+      </div> -->
+      </grammarly-editor-plugin>
+
+
+    </form>
+  </div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+<script>
+const textElement1 = document.getElementsByClassName("note-editable");
+const copyButton1 = document.getElementById("copy1");
+
+const copyText = (e) => {
+window.getSelection().selectAllChildren(textElement1);
+document.execCommand("copy1");
+e.target.setAttribute("tooltip", "Copied! ✅");
+};
+
+const resetTooltip = (e) => {
+e.target.setAttribute("tooltip", "Copy to clipboard");
+};
+
+copyButton.addEventListener("click", (e) => copyText(e));
+copyButton.addEventListener("mouseover", (e) => resetTooltip(e));
+</script>

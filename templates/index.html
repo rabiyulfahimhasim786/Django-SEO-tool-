@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>C.R.U.D</title>
+    <style>
+    .container {
+        margin-left: 550px;
+        margin-top: 150px;
+        width: 300px;
+        height: 100px;
+        padding: 15px;
+        background-color: aquamarine;
+    }
+    </style>
+</head>
+
+<body>
+    <p style="margin-left:550px;"><a href="retrieve">Check data</a></p>
+    <div class="container">
+        <table>
+            <tbody>
+                <form action="create" method="POST">
+                    {% csrf_token %}
+                    <tr>
+                        <td> Name</td>
+                        <td><input type="text" name="name" required></td>
+                    </tr>
+                    <tr>
+                        <td> Age</td>
+                        <td><input type="text" name="age" required></td>
+                    </tr>
+                    <tr>
+                        <td> Phone</td>
+                        <td><textarea name='phone' required></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><button>Submit</button></td>
+                    </tr>
+                </form>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

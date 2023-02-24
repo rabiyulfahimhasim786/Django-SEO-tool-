@@ -1,0 +1,222 @@
+{% include 'base.html' %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Keyword Analyser</title>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  .header {
+  overflow: hidden;
+  /* background-color: #f1f1f1; */
+  background: linear-gradient(90deg, rgba(89,31,201,1) 38%, rgba(90,72,208,1) 70%);
+  padding: 10px 10px;
+}
+
+.header a {
+  float: left;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* .header a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+  .descritionsclass {
+   display: flex;
+   margin-bottom: 15px;
+  }
+  .descritionsclass label {
+    padding-right: 10px;
+  }
+  .documentlabel {
+    padding-right: 10px;
+}
+  .upload_box3 {
+    /* border-radius: 20px !important; */
+    /* box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px ; */
+    border-radius: 8px !important;
+    /* width: 100%; */
+    /* box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px; */
+    box-shadow: none;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+  }
+  .uplo_box {
+    padding: 8px;
+    background: #f9fafb;
+    border-radius: 8px ;
+}
+  .hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #fff;
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+.key_word {
+  display: flex;
+  padding-bottom: 20px;
+}
+.key_word textarea {
+  width: 100%;
+    margin-left: 10px;
+    border: 1px solid #591fc9;
+    border-radius: 10px;
+    outline: #591fc9;
+}
+.upload_butons {
+  background: #591fc9;
+  color: #fff;
+}
+</style>
+
+  </head>
+  <body>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-dark header">
+      <a href="#" style="margin-left: 600px;" class="btn btn-primary bace_title">SEO Keyword Analysis</a>
+    </nav> -->
+    {% include 'header.html' %}
+    <!-- <div class="header">
+      <a href="#default" class="logo"><i class="fa fa-file-word-o" aria-hidden="true"></i> SEO Keyword Analysis</a>
+      <div class="header-right">
+        <a class="hover-underline-animation" href="#"><i class="fa fa-home" style="font-size: 22px;" aria-hidden="true"></i></a>
+        <a class="hover-underline-animation" href="https://mano96-plagiarism.hf.space/" target="blank">plagiarism checker</a>
+        <a class="hover-underline-animation" href="#">paraphrasing</a>
+        <a class="hover-underline-animation" href="#">url to content</a>
+        <a class="hover-underline-animation" href="#">grammerly</a>
+        <a class="hover-underline-animation" href="{% url 'logout' %}"><i class="fa fa-sign-out" style="font-size: 22px;" aria-hidden="true"></i></a>
+      </div>
+    </div> -->
+    <div class="d-flex justify-content-center mt-5 upload_file_box">
+      <div class="uplo_box">
+        <div class=" upload_box3 " style="width: 30rem;">
+        
+       
+       
+       {% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    <!-- <div class="descritionsclass">
+      <label for="id_description">Description:</label>
+      <textarea type="text" class="description" name="description" maxlength="255" id="id_description" rows="5" cols="33" spellcheck="false"></textarea>
+      </div> -->
+      <div class="key_word">
+        <label for="id_Keywords">Keywords:</label> 
+        <textarea type="text" name="Keywords" maxlength="255" required="" id="id_Keywords"></textarea>
+      </div>
+    <button class="btn upload_butons" type="submit">Submit</button>
+  </form>
+
+  <p style="text-align: left;  margin-top: 10px;">Uploaded files:</p>
+  <ul>
+    {% for obj in documents1 %}
+      <li>
+        <a href="{{ obj.Keywords.url }}">{{ obj.Keywords }}</a>
+        <small>(Description: {{ obj.uploaded_at }})</small>
+        <form method="POST" action="{% url 'delete_keyword' obj.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form> 
+      </li>
+    {% endfor %}
+  </ul>
+  
+   <!-- <p></p>
+   <div class="container">
+    <h2 class="text-center"><u>SSL ExpiryDates </u></h2><br>            
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Search Terms</th>
+          <th>Rank</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Link</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+    
+    
+      {% for i in data %}
+        <tr>
+          <td>{{i.searchTerms}}</td>
+          <td>{{i.rank}}</td>
+          <td>{{i.title}}</td>
+          <td>{{i.snippet}}</td>
+          <td>{{i.link}}</td>
+    
+        </tr>
+      {% endfor %}
+      
+      </tbody>
+    </table>
+  </div>
+   <p></p> -->
+
+
+{% endblock %}
+        </div>
+    </div>
+    </div>    
+  </body>
+</html>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+ 
