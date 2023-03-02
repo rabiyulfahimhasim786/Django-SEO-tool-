@@ -138,6 +138,10 @@
                 {% csrf_token %}
                 <ul class="form-style-1">
                     <li>
+                        <label>Search Terms</label>
+                        <textarea class="field-long field-textarea" name='genre'>{{object.genre}}</textarea>
+                    </li>
+                    <li>
                         <label>Title</label>
                         <textarea class="field-long field-textarea" name="title">{{object.title}}</textarea>
                     </li>
@@ -149,10 +153,7 @@
                         <label>Link</label>
                         <textarea class="field-long field-textarea" name='filmurl'>{{object.filmurl}}</textarea>
                     </li>
-                    <li>
-                        <label>Search Terms</label>
-                        <textarea class="field-long field-textarea" name='genre'>{{object.genre}}</textarea>
-                    </li>
+                    
                     <li>
                         <button class="subbtn">Submit</button>
                     </li>
