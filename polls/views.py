@@ -24,7 +24,7 @@ keys = 'cseksey'
 # def index(request):
 #     return HttpResponse('hello world')
 
-
+# dot = '/var/www/subdomain/spellchecker/grammer'
 #dot = '/var/www/seo/t'
 dot = '.'
 def SignupPage(request):
@@ -184,6 +184,7 @@ def keyword_csv(request):
     print(n)
     #dot = '/var/www/seo/t'
     dot = '.'
+    # dot = '/var/www/subdomain/spellchecker/grammer'
     search = adv.serp_goog(q=n, cx=cxs, key=keys)
     search.to_csv(dot+'/media/json/keyword.csv')
     datasets = pd.read_csv(dot+'/media/json/keyword.csv',  encoding= 'unicode_escape')
@@ -191,7 +192,7 @@ def keyword_csv(request):
     dfdata = pd.DataFrame(data=d1)
     #display(df)
     dfdata.to_csv(dot+'/media/json/pixar.csv',  index=False)
-    with open(dot+'/media/json/pixar.csv',  'r', encoding="utf-8") as file:
+    with open(dot+'/media/json/pixar.csv', 'r', encoding="utf-8") as file:
                 reader = csv.reader(file)
                 next(reader)  # Advance past the header
                 for row in reader:
@@ -257,7 +258,7 @@ def delete_keyword(request,id):
 # dot = '.'
 @login_required(login_url='login')
 def run(request):
-    with open(dot+'/media/csv/pixar.csv',  'r', encoding="utf-8") as file:
+    with open(dot+'/media/csv/pixar.csv', 'r', encoding="utf-8") as file:
         reader = csv.reader(file)
         next(reader)  # Advance past the header
 
@@ -281,6 +282,8 @@ def run(request):
 def indexhtml(request):
     filmes = Film.objects.all()
     return render(request, 'films.html', { 'filmes': filmes })
+
+
 
 
 # def create(request):
@@ -338,3 +341,20 @@ def delete(request, id):
         return redirect('retrieve')
  
     return render(request, "delete_view.html", context)
+
+@login_required(login_url='login')
+def indexpage(request):
+    return render(request,'index.html')
+
+@login_required(login_url='login')
+def createindedxdata(request):
+    if request.method=="POST":
+        title=request.POST['title']
+        year=request.POST['year']
+        filmurl=request.POST['filmurl']
+        genre=request.POST['genre']
+        obj=Film.objects.create(title=title,year=year,filmurl=filmurl,genre=genre)
+        obj.save()
+        return redirect('retrieve')
+    return redirect('/')
+

@@ -24,9 +24,9 @@ keys = 'cseksey'
 # def index(request):
 #     return HttpResponse('hello world')
 
-dot = '/var/www/subdomain/spellchecker/grammer'
+dot = '/var/www/subdomain/grammerly/urltocontent'
 #dot = '/var/www/seo/t'
-#dot = '.'
+# dot = '.'
 def SignupPage(request):
     if request.method=='POST':
         uname=request.POST.get('username')
@@ -183,8 +183,8 @@ def keyword_csv(request):
         n = obj.Keywords
     print(n)
     #dot = '/var/www/seo/t'
-    #dot = '.'
-    dot = '/var/www/subdomain/spellchecker/grammer'
+    # dot = '.'
+    dot = '/var/www/subdomain/grammerly/urltocontent'
     search = adv.serp_goog(q=n, cx=cxs, key=keys)
     search.to_csv(dot+'/media/json/keyword.csv')
     datasets = pd.read_csv(dot+'/media/json/keyword.csv',  encoding= 'unicode_escape')
@@ -284,6 +284,8 @@ def indexhtml(request):
     return render(request, 'films.html', { 'filmes': filmes })
 
 
+
+
 # def create(request):
 #     if request.method=="POST":
 #         name=request.POST['name']
@@ -339,3 +341,20 @@ def delete(request, id):
         return redirect('retrieve')
  
     return render(request, "delete_view.html", context)
+
+@login_required(login_url='login')
+def indexpage(request):
+    return render(request,'index.html')
+
+@login_required(login_url='login')
+def createindedxdata(request):
+    if request.method=="POST":
+        title=request.POST['title']
+        year=request.POST['year']
+        filmurl=request.POST['filmurl']
+        genre=request.POST['genre']
+        obj=Film.objects.create(title=title,year=year,filmurl=filmurl,genre=genre)
+        obj.save()
+        return redirect('retrieve')
+    return redirect('/')
+

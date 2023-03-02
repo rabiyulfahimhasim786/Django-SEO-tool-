@@ -20,3 +20,4 @@ class Filmform(forms.ModelForm):
     class Meta:
         model=Film
         fields="__all__"
+
